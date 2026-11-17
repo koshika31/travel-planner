@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153f3a">
+  <title>Wayfarer — Travel Planner</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Wayfarer home">
+        <span class="brand-mark">✳</span><span>wayfarer</span>
+      </a>
+      <nav id="mainNav" class="top-nav hidden" aria-label="Main navigation">
+        <a class="nav-link active" href="#home">My trips</a>
+        <a class="nav-link" href="#discover">Discover</a>
+      </nav>
+      <div id="topActions" class="top-actions hidden">
+        <span id="userGreeting" class="hello-label"></span>
+        <button id="logoutButton" class="button button-quiet logout-button" type="button">Log out</button>
+        <button id="userAvatar" class="avatar" aria-label="Traveler profile">T</button>
+      </div>
+    </header>
+
+    <main id="authScreen" class="screen">
+      <section class="auth-layout">
+        <div class="auth-art"><div class="auth-orbit">✳</div><div class="auth-art-copy"><span>YOUR NEXT CHAPTER</span><strong>Somewhere<br><em>is calling.</em></strong><small>Keep every plan and possibility together.</small></div><div class="auth-landscape"></div></div>
+        <div class="auth-card-wrap">
+          <div class="auth-card">
+            <div class="eyebrow dark-eyebrow">YOUR TRAVEL JOURNAL</div>
+            <h1 id="authTitle">Welcome back.</h1>
+            <p id="authDescription">Sign in to pick up where your next trip left off.</p>
+            <form id="authForm" class="auth-form">
+              <label>USERNAME<input id="authUsername" name="username" autocomplete="username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" placeholder="e.g. rohan_travels"></label>
+              <label>PASSWORD<input id="authPassword" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="72" placeholder="At least 8 characters"></label>
+              <div id="authError" class="auth-error" role="alert"></div>
+              <button id="authSubmit" class="button button-dark auth-submit" type="submit">Log in <span>↗</span></button>
+            </form>
+            <button id="authToggle" class="auth-toggle" type="button">New to Wayfarer? <strong>Create an account</strong></button>
+            <p class="auth-footnote">Plan trips, organize your budget, and invite friends to share expenses.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <main id="dashboardScreen" class="screen hidden">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR PERSONAL TRAVEL STUDIO</div>
+          <h1>Make room for<br><em>somewhere new.</em></h1>
+          <p>All your plans, places and little details, thoughtfully in one place.</p>
+          <button class="button button-lime" id="newTripButton">Plan a trip <span>↗</span></button>
+          <div class="hero-note"><span class="note-spark">✦</span> A good trip begins long before takeoff.</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun-disc"></div><div class="art-cloud cloud-one"></div><div class="art-cloud cloud-two"></div>
+          <div class="hill hill-back"></div><div class="hill hill-front"></div>
+          <div class="art-stamp"><span>take<br>the scenic<br>route</span><b>✳</b></div>
+          <div class="art-caption"><span>✦</span><span>Somewhere in the hills<br><small>19° 26' N  ·  73° 44' E</small></span></div>
+        </div>
+      </section>
+
+      <section class="stat-row" aria-label="Travel overview">
+        <article class="stat-card"><div class="stat-icon mint-icon">↗</div><div><span class="stat-label">Trips planned</span><strong id="statTrips">—</strong></div><span class="stat-foot">little adventures ahead</span></article>
+        <article class="stat-card"><div class="stat-icon peach-icon">₹</div><div><span class="stat-label">Planned budget</span><strong id="statBudget">—</strong></div><span class="stat-foot">across all your trips</span></article>
+        <article class="stat-card"><div class="stat-icon lilac-icon">⌖</div><div><span class="stat-label">Places to go</span><strong id="statPlaces">—</strong></div><span class="stat-foot">and plenty to explore</span></article>
+      </section>
+
+      <section id="invitationsSection" class="content-section invitations-section hidden">
+        <div class="section-heading"><div><div class="eyebrow dark-eyebrow">TRAVELING TOGETHER</div><h2>Trip invitations</h2><p>Friends have invited you along.</p></div></div>
+        <div id="invitationsList" class="invitations-list"></div>
+      </section>
+
+      <section class="content-section" id="home">
+        <div class="section-heading">
+          <div><div class="eyebrow dark-eyebrow">THE GOOD PART</div><h2>Your trips</h2><p>Every detail of your next getaway, right where you left it.</p></div>
+          <button class="button button-outline" id="newTripButtonSecondary">＋ New trip</button>
+        </div>
+        <div id="tripsGrid" class="trips-grid"><div class="loading-card">Gathering your plans…</div></div>
+      </section>
+
+      <section class="content-section discover-section" id="discover">
+        <div class="section-heading discover-heading">
+          <div><div class="eyebrow dark-eyebrow">A LITTLE INSPIRATION</div><h2>Somewhere on your mind?</h2><p>Find a place that feels like your kind of escape.</p></div>
+          <label class="search-field"><span>⌕</span><input id="destinationSearch" type="search" placeholder="Search places or countries" aria-label="Search destinations"></label>
+        </div>
+        <div id="destinationGrid" class="destination-grid"></div>
+      </section>
+      <footer class="footer"><span class="brand-mark small-mark">✳</span> made for the miles and moments in between.</footer>
+    </main>
+
+    <main id="tripScreen" class="screen trip-screen hidden">
+      <button class="back-link" id="backButton">← <span>All trips</span></button>
+      <section id="tripHeader" class="trip-header"></section>
+      <div id="sharedNotice" class="shared-notice hidden">✦ You’re viewing a shared itinerary</div>
+      <div class="trip-layout">
+        <div class="trip-main-column">
+          <section class="panel itinerary-panel">
+            <div class="panel-heading"><div><div class="eyebrow dark-eyebrow">MAKE THE MOST OF IT</div><h2>Your itinerary</h2><p>Little plans that make a big trip.</p></div><button id="addActivityButton" class="button button-dark">＋ Add a plan</button></div>
+            <div id="itineraryContent"></div>
+          </section>
+          <section id="collaborationPanel" class="panel collaboration-panel">
+            <div class="panel-heading"><div><div class="eyebrow dark-eyebrow">BETTER TOGETHER</div><h2>Travel crew & shared costs</h2><p>Invite friends and keep the trip spending fair.</p></div><span class="review-mark">♧</span></div>
+            <div class="crew-section">
+              <div class="crew-section-title"><strong>Travel crew</strong><span id="crewCount" class="crew-count"></span></div>
+              <div id="memberList" class="member-list"></div>
+              <form id="inviteForm" class="invite-form hidden">
+                <input id="inviteUsername" maxlength="30" placeholder="Friend’s username" aria-label="Friend’s username" required>
+                <button class="button button-dark" type="submit">Invite friend ↗</button>
+              </form>
+              <p id="inviteHint" class="crew-hint">Invited friends can view private trips and add shared expenses. Only you can edit the itinerary.</p>
+            </div>
+            <div class="expense-section">
+              <div class="crew-section-title"><div><strong>Expense split</strong><small>Each expense is split equally among the owner and accepted friends.</small></div><span id="expenseTotal" class="expense-total"></span></div>
+              <div id="balanceSummary" class="balance-summary"></div>
+              <form id="expenseForm" class="expense-form hidden">
+                <input id="expenseDescription" maxlength="120" placeholder="What was it for? e.g. dinner" aria-label="Expense description" required>
+                <select id="expenseCategory" aria-label="Expense category"><option>Food</option><option>Transport</option><option>Stay</option><option>Activity</option><option>Other</option></select>
+                <label class="expense-amount"><span>₹</span><input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="Amount" aria-label="Expense amount" required></label>
+                <button class="button button-dark" type="submit">Add expense</button>
+              </form>
+              <small id="expensePayerHint" class="crew-hint hidden">Your account will be recorded as the person who paid.</small>
+              <div id="expenseList" class="expense-list"></div>
+            </div>
+            <div id="groupAccessMessage" class="group-access-message hidden">Shared expenses are visible to the trip owner and accepted invitees. Ask the owner to invite your account to join the group.</div>
+          </section>
+          <section class="panel route-panel">
+            <div class="panel-heading"><div><div class="eyebrow dark-eyebrow">GETTING THERE</div><h2>Map your way</h2><p>Pick your starting point and choose how you want to go.</p></div><span class="route-symbol">⌖</span></div>
+            <form id="routeForm" class="route-form">
+              <label>FROM<input id="routeFrom" placeholder="Starting point" required></label>
+              <span class="route-arrow">→</span>
+              <label>TO<input id="routeTo" placeholder="Destination" required></label>
+              <label>BY<select id="routeMode"><option value="driving">Car</option><option value="transit">Public transit</option><option value="walking">Walking</option><option value="bicycling">Bicycle</option></select></label>
+              <button class="button button-dark" type="submit">Open route ↗</button>
+            </form>
+            <p class="route-footnote">Opens directions in Google Maps. Update your stops to personalize the route.</p>
+          </section>
+          <section class="panel reviews-panel">
+            <div class="panel-heading"><div><div class="eyebrow dark-eyebrow">NOTES FROM THE ROAD</div><h2>Destination reviews</h2><p>Share a tip for someone heading to <span id="reviewDestinationName"></span>.</p></div><span class="review-mark">✦</span></div>
+            <div class="review-compose">
+              <form id="reviewForm" class="review-form">
+                <div class="review-form-top"><input id="reviewAuthor" placeholder="Your name" maxlength="80" required><select id="reviewRating" aria-label="Rating"><option value="5">★★★★★ · Loved it</option><option value="4">★★★★☆ · Great</option><option value="3">★★★☆☆ · Nice</option><option value="2">★★☆☆☆ · Okay</option><option value="1">★☆☆☆☆ · Not for me</option></select></div>
+                <div class="review-form-bottom"><textarea id="reviewComment" placeholder="What should future travelers know?" maxlength="1000" required></textarea><button class="button button-dark" type="submit">Post review ↗</button></div>
+              </form>
+            </div>
+            <div id="reviewList" class="review-list"></div>
+          </section>
+        </div>
+        <aside class="trip-side-column">
+          <section class="weather-card" id="weatherCard"><div class="weather-loading">Checking the skies…</div></section>
+          <section class="panel budget-panel">
+            <div class="eyebrow dark-eyebrow">KEEP IT COMFORTABLE</div><h2>Trip budget</h2><p>Estimated spending, all in one view.</p>
+            <div id="budgetSummary"></div>
+          </section>
+          <section class="tip-card"><span class="tip-star">✦</span><p>Small tip</p><strong>Leave a little room for the unexpected.</strong><span class="tip-decoration">✳</span></section>
+        </aside>
+      </div>
+    </main>
+
+    <main id="sharedErrorScreen" class="screen hidden shared-error"><div class="error-orbit">⌖</div><h1>This trip isn’t available</h1><p>The itinerary may have been unshared or the link may have changed.</p><a class="button button-dark" href="/">Back to Wayfarer</a></main>
+  </div>
+
+  <dialog id="tripDialog" class="dialog">
+    <form id="tripForm" method="dialog" class="dialog-card">
+      <button class="dialog-close" type="button" data-close="tripDialog" aria-label="Close">×</button>
+      <div class="eyebrow dark-eyebrow">A NEW ADVENTURE</div><h2>Let’s plan your trip.</h2><p>Start with the basics. You can add the fun details next.</p>
+      <div class="form-grid">
+        <label class="full-field">Trip name<input name="title" placeholder="The week we find the sea" required maxlength="100"></label>
+        <label>Destination<input name="destination" placeholder="e.g. Kyoto, Japan" required maxlength="100" list="destinationOptions"></label>
+        <datalist id="destinationOptions"></datalist>
+        <label>Getting around<select name="transport" required><option value="Train">Train</option><option value="Car">Car</option><option value="Flight">Flight</option><option value="Bus">Bus</option><option value="Public transit">Public transit</option><option value="Mixed">A bit of everything</option></select></label>
+        <label>Departure<input type="date" name="startDate" required></label>
+        <label>Return<input type="date" name="endDate" required></label>
+        <label class="full-field">Who can see this trip?<select name="publiclyVisible"><option value="false">Private · only you</option><option value="true">Public · anyone with the link can view</option></select></label>
+        <label class="full-field">Total trip budget <span class="field-unit">INR</span><input type="number" name="plannedBudget" min="0" step="500" placeholder="50000" required></label>
+        <div class="budget-intro full-field"><span>Break it into a few helpful buckets</span><span>INR</span></div>
+        <label>Transport<input type="number" name="transportBudget" min="0" step="500" value="0"></label>
+        <label>Stay<input type="number" name="accommodationBudget" min="0" step="500" value="0"></label>
+        <label>Food<input type="number" name="foodBudget" min="0" step="500" value="0"></label>
+        <label>Activities<input type="number" name="activitiesBudget" min="0" step="500" value="0"></label>
+        <label class="full-field">Other<input type="number" name="otherBudget" min="0" step="500" value="0"></label>
+      </div>
+      <div class="dialog-actions"><button class="button button-quiet" type="button" data-close="tripDialog">Maybe later</button><button class="button button-dark" type="submit">Create trip ↗</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="activityDialog" class="dialog">
+    <form id="activityForm" method="dialog" class="dialog-card">
+      <button class="dialog-close" type="button" data-close="activityDialog" aria-label="Close">×</button>
+      <div class="eyebrow dark-eyebrow">SAVE THE GOOD STUFF</div><h2>Add a plan.</h2><p>Capture a place, a time or an idea for the day.</p>
+      <div class="form-grid">
+        <label class="full-field">What are you planning?<input name="activity" placeholder="Sunrise at the viewpoint" required maxlength="120"></label>
+        <label>Day<select id="activityDay" name="dayNumber" required></select></label>
+        <label>Time<input name="startTime" type="time"></label>
+        <label>Type<select name="category"><option>Activity</option><option>Food</option><option>Stay</option><option>Transport</option><option>Other</option></select></label>
+        <label>Estimated cost <span class="field-unit">INR</span><input name="cost" type="number" min="0" step="50" value="0"></label>
+        <label class="full-field">Where?<input name="location" maxlength="120" placeholder="Address or place name"></label>
+        <label class="full-field">A note for later<textarea name="notes" maxlength="500" placeholder="Opening hours, booking details, or anything to remember"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button class="button button-quiet" type="button" data-close="activityDialog">Cancel</button><button class="button button-dark" type="submit">Add to itinerary ↗</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
